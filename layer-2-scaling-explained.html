@@ -14,6 +14,11 @@
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
   .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
 </style>
 <title>Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper - Crypto Brief</title>
 <meta name="description" content="Understand Layer 2 scaling solutions for Ethereum. Arbitrum, Optimism, Base, and more—how they work and why they matter for crypto users.">
@@ -37,16 +42,13 @@
 (function(){
   const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
   const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
-  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
   const el=document.getElementById("ticker-content");
   async function fetchPrices(){
     try{
       const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
       const d=await r.json();
-      let html="";
       const items=coins.map(c=>{
-        const price=d[c]?.usd;
-        const change=d[c]?.usd_24h_change;
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
         if(!price)return"";
         const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
         const chClass=change>=0?"text-emerald-400":"text-red-400";
@@ -75,7 +77,8 @@
   </div>
 </nav>
 <article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-  <header class="mb-8">
+  <header class="mb-6">
+    <span class="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-300 mb-4">Scaling</span>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper</h1>
     <div class="flex items-center gap-3 text-sm text-gray-500">
       <span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>June 2026</span>
@@ -83,32 +86,136 @@
       <span>~6 min read</span>
     </div>
   </header>
+  <figure class="mb-8 rounded-2xl overflow-hidden border border-indigo-900/30 shadow-2xl shadow-indigo-900/30">
+        <div class="aspect-[16/9]"><img src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?w=1200&h=675&fit=crop&q=80" alt="Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      </figure>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚡</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">4,000</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">TX/sec on L2</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">💸</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">99%</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Lower fees</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🏗️</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">6+</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Major networks</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🔒</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">100%</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Ethereum security</div>
+        </div></div>
   <div class="prose-custom">
-    <div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+    <div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             The Ethereum Scalability Problem
           </h2>
-          <p class="text-gray-400 leading-relaxed">Ethereum's base layer processes roughly 15 transactions per second with gas fees ranging from $1-50+ during congestion. Compare this to Visa's 65,000 TPS. This limited capacity made Ethereum impractical for everyday transactions—buying a $4 coffee could cost $10 in gas fees. Layer 2 solutions solve this by processing transactions off-chain and posting batches to Ethereum's mainnet, inheriting its security while dramatically improving speed and reducing costs.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">Ethereum's base layer processes roughly 15 transactions per second with gas fees ranging from $1–50+ during congestion. Compare this to Visa's 65,000 TPS. This limited capacity made Ethereum impractical for everyday transactions—buying a $4 coffee could cost $10 in gas. Layer 2 solutions solve this by processing transactions off-chain and posting batches to Ethereum's mainnet, inheriting its security while dramatically improving speed and cutting costs.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🐢</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">15 TPS</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Ethereum L1</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚡</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">4,000 TPS</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Layer 2</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">💳</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">65,000 TPS</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Visa (target)</div>
+        </div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             How Layer 2s Actually Work
           </h2>
-          <p class="text-gray-400 leading-relaxed">Optimistic Rollups (Arbitrum, Optimism, Base): Process transactions on a separate chain, periodically posting compressed data to Ethereum. 'Optimistic' because they assume transactions are valid unless challenged. If someone detects fraud, they submit proof and invalid transactions are reversed. ZK-Rollups (zkSync, StarkNet, Polygon zkEVM): Use zero-knowledge proofs to mathematically verify every transaction before posting to Ethereum. More secure and faster finality, but more complex to build on. Both types reduce fees by 10-100x while maintaining 2,000-4,000 TPS.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">Layer 2s bundle thousands of transactions off-chain, compress them, then post a single proof back to Ethereum. You get L2 speed with L1-grade security.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-3 text-center">How a Layer 2 Transaction Works</div>
+      <svg viewBox="0 0 560 150" class="w-full" role="img" aria-label="Layer 2 transaction flow to Ethereum">
+        <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6366f1"/></marker>
+        <linearGradient id="dg2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        <g font-family="Inter,sans-serif" text-anchor="middle">
+          <rect x="10" y="50" width="120" height="50" rx="10" fill="#1e1b4b"/><text x="70" y="80" fill="#c7c7d1" font-size="12" font-weight="600">Tx on L2</text>
+          <line x1="134" y1="75" x2="176" y2="75" stroke="#6366f1" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="180" y="50" width="140" height="50" rx="10" fill="#1e1b4b"/><text x="250" y="73" fill="#c7c7d1" font-size="11" font-weight="600">Batched &amp;</text><text x="250" y="88" fill="#c7c7d1" font-size="11" font-weight="600">Compressed</text>
+          <line x1="324" y1="75" x2="366" y2="75" stroke="#6366f1" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="370" y="50" width="180" height="50" rx="10" fill="url(#dg2)"/><text x="460" y="73" fill="#fff" font-size="11" font-weight="700">Posted to Ethereum</text><text x="460" y="88" fill="#fff" font-size="11">Security inherited</text>
+        </g></svg></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
+            Optimistic vs. ZK Rollups
+          </h2>
+          <p class="text-gray-400 leading-relaxed">The two dominant rollup designs take opposite trust assumptions. Optimistic rollups assume transactions are valid unless challenged; ZK rollups mathematically prove validity up front.</p>
+          <div class="my-7"><div class="grid sm:grid-cols-2 gap-3"><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-red-400">🟦 Optimistic Rollups</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Assume valid unless challenged</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>7-day withdrawal window</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Easier to build EVM apps</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Examples: Arbitrum, Optimism, Base</span></li></ul>
+          </div><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-emerald-400">🟣 ZK-Rollups</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Validity proven with math</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Near-instant finality</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>More complex to build</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Examples: zkSync, StarkNet, Scroll</span></li></ul>
+          </div></div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Top Layer 2 Networks in 2026
           </h2>
-          <p class="text-gray-400 leading-relaxed">Arbitrum One: Highest TVL among L2s ($15B+), massive DeFi ecosystem, low fees ($0.01-0.10 per transaction). Base (Coinbase's L2): Fastest-growing L2, seamless Coinbase integration, growing dApp ecosystem. Optimism: Ethereum's official rollup partner (Optimism Collective), Superchain vision. zkSync Era: Leading ZK-rollup with EVM compatibility and ultra-low fees. Polygon zkEVM: Major brand with enterprise partnerships. Scroll: Emerging ZK-rollup with strong developer interest. For users: bridging takes 5-10 minutes, then transactions are nearly instant.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
-            How to Use Layer 2 Networks
+          <p class="text-gray-400 leading-relaxed">The L2 landscape has consolidated around a few dominant networks, each with its own ecosystem strength.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🔵</div>
+            <div class="text-sm font-bold text-white mb-1">Arbitrum One</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Highest TVL ($15B+), deep DeFi, $0.01–0.10 per tx.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🟦</div>
+            <div class="text-sm font-bold text-white mb-1">Base</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Coinbase's L2, fastest-growing, seamless onboarding.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🔴</div>
+            <div class="text-sm font-bold text-white mb-1">Optimism</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Ethereum's official rollup, Superchain vision.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">⚡</div>
+            <div class="text-sm font-bold text-white mb-1">zkSync Era</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Leading ZK-rollup, EVM-compatible, ultra-low fees.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🟣</div>
+            <div class="text-sm font-bold text-white mb-1">Polygon zkEVM</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Major brand, enterprise partnerships.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">📜</div>
+            <div class="text-sm font-bold text-white mb-1">Scroll</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Emerging ZK-rollup, strong dev interest.</div>
+          </div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
+            How to Use a Layer 2 Network
           </h2>
-          <p class="text-gray-400 leading-relaxed">Getting started is simpler than most think. Step 1: Bridge funds from Ethereum mainnet to your chosen L2 using the official bridge (Arbitrum Bridge, Base Bridge, etc.). This costs a one-time L1 gas fee ($2-10). Step 2: Switch your wallet's network to the L2. Step 3: Use DeFi protocols, trade on DEXs, and interact with dApps on the L2. Gas fees will be 95-99% lower than mainnet. Step 4: When you want to move funds back, use the bridge in reverse. Security is guaranteed by Ethereum's base layer—your funds are as safe as on mainnet.</p>
+          <p class="text-gray-400 leading-relaxed">Bridging takes 5–10 minutes, then everything is nearly instant and 95–99% cheaper than mainnet.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-5"><div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-2"><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">1</div>
+            <div class="text-sm font-semibold text-white leading-snug">Bridge ETH from mainnet to L2</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">2</div>
+            <div class="text-sm font-semibold text-white leading-snug">Switch wallet network to the L2</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">3</div>
+            <div class="text-sm font-semibold text-white leading-snug">Use DeFi & dApps at 99% lower fees</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">4</div>
+            <div class="text-sm font-semibold text-white leading-snug">Bridge back when you need mainnet</div>
+          </div></div></div>
         </div>
+    <div class="my-7 flex items-center gap-2.5">
+        <span class="text-lg">🎯</span><span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Key Takeaway</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-indigo-500/40 to-transparent"></span>
+      </div>
+    <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Smart crypto investing comes down to a few principles: self-custody your keys, hold for the long term, diversify across audited protocols, and never invest more than you can afford to lose.</p><div class="text-sm text-indigo-400 font-semibold mt-3">— Crypto Brief</div>
+      </blockquote>
   </div>
   <div class="mt-10 pt-6 border-t border-indigo-900/20">
   <a href="/" class="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors">

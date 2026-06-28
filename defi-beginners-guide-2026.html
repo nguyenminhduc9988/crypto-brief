@@ -14,6 +14,11 @@
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
   .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
 </style>
 <title>DeFi for Beginners: Everything You Need to Know About Decentralized Finance - Crypto Brief</title>
 <meta name="description" content="Complete beginner's guide to DeFi (Decentralized Finance). Learn how to earn passive income, lend, borrow, and trade without banks.">
@@ -37,16 +42,13 @@
 (function(){
   const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
   const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
-  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
   const el=document.getElementById("ticker-content");
   async function fetchPrices(){
     try{
       const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
       const d=await r.json();
-      let html="";
       const items=coins.map(c=>{
-        const price=d[c]?.usd;
-        const change=d[c]?.usd_24h_change;
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
         if(!price)return"";
         const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
         const chClass=change>=0?"text-emerald-400":"text-red-400";
@@ -75,7 +77,8 @@
   </div>
 </nav>
 <article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-  <header class="mb-8">
+  <header class="mb-6">
+    <span class="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-300 mb-4">DeFi</span>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">DeFi for Beginners: Everything You Need to Know About Decentralized Finance</h1>
     <div class="flex items-center gap-3 text-sm text-gray-500">
       <span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>June 2026</span>
@@ -83,32 +86,119 @@
       <span>~6 min read</span>
     </div>
   </header>
+  <figure class="mb-8 rounded-2xl overflow-hidden border border-indigo-900/30 shadow-2xl shadow-indigo-900/30">
+        <div class="aspect-[16/9]"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=675&fit=crop&q=80" alt="DeFi for Beginners: Everything You Need to Know About Decentralized Finance" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      </figure>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">💰</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">$50B+</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Total Value Locked</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🌐</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">24/7</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Always open</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🏦</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">0</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Banks needed</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🔗</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">1,000+</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Live protocols</div>
+        </div></div>
   <div class="prose-custom">
-    <div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+    <div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             What is DeFi and Why It Matters
           </h2>
-          <p class="text-gray-400 leading-relaxed">DeFi (Decentralized Finance) is a $50B+ ecosystem of financial applications built on blockchain networks, primarily Ethereum and Layer 2s. It replaces traditional financial intermediaries—banks, brokers, exchanges—with open-source smart contracts. Anyone with an internet connection can lend, borrow, earn interest, trade derivatives, and buy insurance without permission, paperwork, or minimum requirements. DeFi is open 24/7, globally accessible, and transparent by default.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">DeFi (Decentralized Finance) is a $50B+ ecosystem of financial applications built on blockchain networks, primarily Ethereum and Layer 2s. It replaces traditional financial intermediaries—banks, brokers, exchanges—with open-source smart contracts. Anyone with an internet connection can lend, borrow, earn interest, trade derivatives, and buy insurance without permission, paperwork, or minimum requirements.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-3 text-center">The DeFi Tech Stack</div>
+      <svg viewBox="0 0 560 220" class="w-full" role="img" aria-label="DeFi technology stack layers">
+        <defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        <g font-family="Inter,sans-serif" text-anchor="middle">
+          <rect x="40" y="20" width="480" height="34" rx="8" fill="url(#dg)"/><text x="280" y="42" fill="#fff" font-size="13" font-weight="700">dApps — Uniswap · Aave · Lido · Compound</text>
+          <rect x="40" y="64" width="480" height="34" rx="8" fill="#1e1b4b"/><text x="280" y="86" fill="#c7c7d1" font-size="13" font-weight="600">Smart Contracts &amp; Protocols</text>
+          <rect x="40" y="108" width="480" height="34" rx="8" fill="#1e1b4b"/><text x="280" y="130" fill="#c7c7d1" font-size="13" font-weight="600">Layer 2 — Arbitrum · Base · Optimism</text>
+          <rect x="40" y="152" width="480" height="34" rx="8" fill="#0f0e17" stroke="#312e81"/><text x="280" y="174" fill="#c7c7d1" font-size="13" font-weight="600">Ethereum Base Layer (Settlement + Security)</text>
+        </g>
+        <line x1="280" y1="196" x2="280" y2="210" stroke="#6366f1" stroke-width="2"/>
+        <circle cx="280" cy="212" r="4" fill="#6366f1"/>
+      </svg></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             How to Get Started with DeFi
           </h2>
-          <p class="text-gray-400 leading-relaxed">Step 1: Set up a non-custodial wallet (MetaMask for Ethereum, Phantom for Solana). Step 2: Buy ETH or SOL on a centralized exchange and transfer to your wallet. Step 3: Connect your wallet to a DeFi platform like Aave (lending/borrowing), Uniswap (trading), or Lido (staking). Step 4: Start with low amounts to learn the mechanics. Step 5: Always verify contract addresses—rug pulls and scams are common. Never invest more than you can afford to lose.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">Getting into DeFi follows a clear path. Set up a non-custodial wallet (MetaMask for Ethereum, Phantom for Solana), fund it with ETH or SOL, then connect to a DeFi platform. Always verify contract addresses—rug pulls and scams are common—and never invest more than you can afford to lose.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-5"><div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-2"><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">1</div>
+            <div class="text-sm font-semibold text-white leading-snug">Install a self-custody wallet (MetaMask / Phantom)</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">2</div>
+            <div class="text-sm font-semibold text-white leading-snug">Buy ETH or SOL & transfer to your wallet</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">3</div>
+            <div class="text-sm font-semibold text-white leading-snug">Connect to Aave, Uniswap or Lido</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">4</div>
+            <div class="text-sm font-semibold text-white leading-snug">Start small, verify every contract address</div>
+          </div></div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Top DeFi Use Cases
           </h2>
-          <p class="text-gray-400 leading-relaxed">Lending/Borrowing: Aave and Compound let you earn 3-8% APY lending your crypto, or borrow against it without credit checks. DEX Trading: Uniswap, Curve, and Raydium enable token swaps without centralized exchanges. Yield Farming: Provide liquidity to pools and earn trading fees plus token rewards (5-50% APY, varying by risk). Staking: Stake ETH to secure the network and earn 3-5% APR. Stablecoin Yields: Lend stablecoins (USDC, DAI) for low-risk 4-8% APY.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">DeFi spans lending, trading, yield generation and more. The biggest platforms let you put idle assets to work or trade without a centralized middleman.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🏦</div>
+            <div class="text-sm font-bold text-white mb-1">Lending</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Aave & Compound: earn 3–8% APY or borrow against collateral, no credit checks.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🔁</div>
+            <div class="text-sm font-bold text-white mb-1">DEX Trading</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Uniswap, Curve & Raydium swap tokens peer-to-peer, no centralized exchange.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🌾</div>
+            <div class="text-sm font-bold text-white mb-1">Yield Farming</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Supply liquidity to pools for trading fees + token rewards (5–50% APY).</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">⚡</div>
+            <div class="text-sm font-bold text-white mb-1">Staking</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Stake ETH to secure the network and earn 3–5% APR.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">💵</div>
+            <div class="text-sm font-bold text-white mb-1">Stablecoin Yield</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Lend USDC/DAI for low-risk 4–8% APY.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🛡️</div>
+            <div class="text-sm font-bold text-white mb-1">Insurance</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Protocols like Nexus Mutual cover smart-contract hacks.</div>
+          </div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Risks and How to Manage Them
           </h2>
-          <p class="text-gray-400 leading-relaxed">Smart contract risk: code bugs can be exploited (always use audited protocols). Impermanent loss: providing liquidity to volatile pools can lose value vs. holding. Liquidation risk: borrowed positions can be liquidated if collateral drops. Regulatory risk: DeFi faces increasing government scrutiny. Manage risk by: diversifying across protocols, using established platforms, keeping 80% in blue-chip DeFi (Aave, Lido, MakerDAO), and never going all-in on any single strategy.</p>
+          <p class="text-gray-400 leading-relaxed">DeFi is powerful but unforgiving. Smart-contract bugs, impermanent loss, liquidations and regulation all pose real threats. Manage them by diversifying across audited protocols and keeping the bulk of capital in blue-chip DeFi.</p>
+          <div class="my-7"><div class="grid sm:grid-cols-2 gap-3"><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-red-400">❌ Reckless DeFi</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Putting everything in one unaudited farm</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Chasing 200% APY memes</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>No wallet backups</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Borrowing near max LTV</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Ignoring contract audits</span></li></ul>
+          </div><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-emerald-400">✅ Smart DeFi</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Diversify across Aave, Lido, MakerDAO</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Stick to audited, blue-chip protocols</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Keep 80% in established DeFi</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Track positions weekly</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Test with small amounts first</span></li></ul>
+          </div></div></div>
         </div>
+    <div class="my-7 flex items-center gap-2.5">
+        <span class="text-lg">🎯</span><span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Key Takeaway</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-indigo-500/40 to-transparent"></span>
+      </div>
+    <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Smart crypto investing comes down to a few principles: self-custody your keys, hold for the long term, diversify across audited protocols, and never invest more than you can afford to lose.</p><div class="text-sm text-indigo-400 font-semibold mt-3">— Crypto Brief</div>
+      </blockquote>
   </div>
   <div class="mt-10 pt-6 border-t border-indigo-900/20">
   <a href="/" class="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors">

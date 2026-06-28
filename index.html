@@ -14,6 +14,11 @@
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
   .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
 </style>
 <title>Crypto Brief - Cryptocurrency News, DeFi Guides & Blockchain Education for </title>
 <meta name="description" content="Cryptocurrency News, DeFi Guides & Blockchain Education for Smart Investors">
@@ -37,16 +42,13 @@
 (function(){
   const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
   const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
-  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
   const el=document.getElementById("ticker-content");
   async function fetchPrices(){
     try{
       const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
       const d=await r.json();
-      let html="";
       const items=coins.map(c=>{
-        const price=d[c]?.usd;
-        const change=d[c]?.usd_24h_change;
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
         if(!price)return"";
         const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
         const chClass=change>=0?"text-emerald-400":"text-red-400";
@@ -74,59 +76,109 @@
     </div>
   </div>
 </nav>
-<header class="max-w-3xl mx-auto px-4 sm:px-6 pt-16 pb-10 text-center">
-  <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mb-6">
-    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>
-    <span class="text-xs font-medium text-indigo-300">Market updates in real time</span>
+<header class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-8 text-center overflow-hidden">
+  <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-indigo-600/20 to-violet-600/10 blur-3xl"></div><div class="pointer-events-none absolute -bottom-32 -left-24 w-72 h-72 rounded-full bg-gradient-to-tr from-violet-600/15 to-fuchsia-600/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+  <span class="float-a absolute top-10 left-[8%] text-4xl opacity-20">₿</span>
+  <span class="float-b absolute top-20 right-[12%] text-5xl opacity-15">Ξ</span>
+  <span class="float-c absolute bottom-16 left-[18%] text-3xl opacity-20">◎</span>
+  <span class="float-a absolute bottom-10 right-[20%] text-4xl opacity-15">◆</span>
+  <span class="float-b absolute top-1/2 left-[45%] text-3xl opacity-10">✕</span>
+</div>
+  <div class="relative">
+    <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>
+      <span class="text-xs font-medium text-indigo-300">Market updates in real time</span>
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+      Crypto Guides for <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Smart Investors</span>
+    </h1>
+    <p class="text-lg text-gray-400 max-w-2xl mx-auto">In-depth, visual guides on DeFi, taxes, wallets, Layer 2 scaling, DCA strategies, and stablecoins — actionable knowledge, not a wall of text.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">📚</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">6</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Deep-dive guides</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚡</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">Real-time</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Price ticker</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🎯</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">2026</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Up-to-date</div>
+        </div></div>
   </div>
-  <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
-    Cryptocurrency News, DeFi Guides & Blockchain Education for Smart Investors
-  </h1>
-  <p class="text-lg text-gray-400 max-w-2xl mx-auto">In-depth guides on DeFi, taxes, wallets, Layer 2 scaling, DCA strategies, and stablecoins — written for smart investors who want actionable knowledge.</p>
 </header>
+<div class="my-7 flex items-center gap-2.5">
+        <span class="text-lg">📰</span><span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Latest Guides</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-indigo-500/40 to-transparent"></span>
+      </div>
 <main class="max-w-5xl mx-auto px-4 sm:px-6 pb-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-  <a href="defi-beginners-guide-2026.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">DeFi</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+  <a href="defi-beginners-guide-2026.html" class="group block sm:col-span-2 lg:col-span-3 rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/30 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="grid sm:grid-cols-2">
+        <div class="aspect-[16/9] sm:aspect-auto overflow-hidden"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=675&fit=crop&q=80" alt="DeFi for Beginners: Everything You Need to Know About Decentralized Finance" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+        <div class="p-6 sm:p-8 flex flex-col justify-center">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">DeFi</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 rounded px-1.5 py-0.5">Featured</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-3 group-hover:text-indigo-300 transition-colors leading-snug">DeFi for Beginners: Everything You Need to Know About Decentralized Finance</h2>
+          <p class="text-sm text-gray-500 leading-relaxed">Complete beginner's guide to DeFi (Decentralized Finance). Learn how to earn passive income, lend, borrow, and trade without banks.</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-400 group-hover:gap-2.5 transition-all">Read guide
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">DeFi for Beginners: Everything You Need to Know About Decentralized Finance</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Complete beginner's guide to DeFi (Decentralized Finance). Learn how to earn passive income, lend, borrow, and trade without banks.</p>
-    </a><a href="crypto-tax-guide.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Taxes</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a><a href="crypto-tax-guide.html" class="group block rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="aspect-[16/9] overflow-hidden"><img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=400&h=225&fit=crop&q=80" alt="Crypto Taxes: Complete Guide for Traders and Investors in 2026" width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Taxes</span>
+          <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Crypto Taxes: Complete Guide for Traders and Investors in 2026</h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">Understanding crypto taxes in 2026. Capital gains, income tax, reporting requirements, and how to legally minimize your crypto tax bill.</p>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Crypto Taxes: Complete Guide for Traders and Investors in 2026</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Understanding crypto taxes in 2026. Capital gains, income tax, reporting requirements, and how to legally minimize your crypto tax bill.</p>
-    </a><a href="best-cold-wallets-2026.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Security</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a><a href="best-cold-wallets-2026.html" class="group block rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="aspect-[16/9] overflow-hidden"><img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=400&h=225&fit=crop&q=80" alt="Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy?" width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Security</span>
+          <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy?</h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">Compare the best crypto hardware wallets in 2026. Ledger, Trezor, GridPlus, and more. Security features, price, and ease of use reviewed.</p>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy?</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Compare the best crypto hardware wallets in 2026. Ledger, Trezor, GridPlus, and more. Security features, price, and ease of use reviewed.</p>
-    </a><a href="layer-2-scaling-explained.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Scaling</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a><a href="layer-2-scaling-explained.html" class="group block rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="aspect-[16/9] overflow-hidden"><img src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?w=400&h=225&fit=crop&q=80" alt="Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper" width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Scaling</span>
+          <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper</h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">Understand Layer 2 scaling solutions for Ethereum. Arbitrum, Optimism, Base, and more—how they work and why they matter for crypto users.</p>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Layer 2 Scaling Explained: How Ethereum Gets Faster and Cheaper</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Understand Layer 2 scaling solutions for Ethereum. Arbitrum, Optimism, Base, and more—how they work and why they matter for crypto users.</p>
-    </a><a href="crypto-dollar-cost-averaging.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Stablecoins</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a><a href="crypto-dollar-cost-averaging.html" class="group block rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="aspect-[16/9] overflow-hidden"><img src="https://images.unsplash.com/photo-1621761191319-cd4c00d3ee45?w=400&h=225&fit=crop&q=80" alt="Dollar-Cost Averaging Crypto: The Data-Backed Strategy That Beats Timing" width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Strategy</span>
+          <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Dollar-Cost Averaging Crypto: The Data-Backed Strategy That Beats Timing</h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">Is DCA the best crypto investment strategy? Data analysis shows dollar-cost averaging Bitcoin beats lump-sum timing for most investors. Strategy and results.</p>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Dollar-Cost Averaging Crypto: The Data-Backed Strategy That Beats Timing</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Is DCA the best crypto investment strategy? Data analysis shows dollar-cost averaging Bitcoin beats lump-sum timing for most investors. Strategy and results.</p>
-    </a><a href="stablecoin-guide-explained.html" class="group block rounded-xl bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 p-6 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Stablecoins</span>
-        <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a><a href="stablecoin-guide-explained.html" class="group block rounded-2xl overflow-hidden bg-[#16152a] border border-indigo-900/20 hover:border-indigo-500/40 transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5">
+      <div class="aspect-[16/9] overflow-hidden"><img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=225&fit=crop&q=80" alt="Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets" width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">Stablecoins</span>
+          <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets</h3>
+        <p class="text-sm text-gray-500 leading-relaxed line-clamp-3">Learn everything about stablecoins—USDT, USDC, DAI, and more. How they work, risks, yields, and why they matter for crypto and DeFi.</p>
       </div>
-      <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-snug">Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets</h3>
-      <p class="text-sm text-gray-500 leading-relaxed">Learn everything about stablecoins—USDT, USDC, DAI, and more. How they work, risks, yields, and why they matter for crypto and DeFi.</p>
     </a>
 </main>
 <footer class="border-t border-indigo-900/20 mt-16">

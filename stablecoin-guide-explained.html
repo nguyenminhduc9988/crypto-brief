@@ -14,6 +14,11 @@
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
   .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
 </style>
 <title>Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets - Crypto Brief</title>
 <meta name="description" content="Learn everything about stablecoins—USDT, USDC, DAI, and more. How they work, risks, yields, and why they matter for crypto and DeFi.">
@@ -37,16 +42,13 @@
 (function(){
   const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
   const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
-  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
   const el=document.getElementById("ticker-content");
   async function fetchPrices(){
     try{
       const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
       const d=await r.json();
-      let html="";
       const items=coins.map(c=>{
-        const price=d[c]?.usd;
-        const change=d[c]?.usd_24h_change;
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
         if(!price)return"";
         const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
         const chClass=change>=0?"text-emerald-400":"text-red-400";
@@ -75,7 +77,8 @@
   </div>
 </nav>
 <article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-  <header class="mb-8">
+  <header class="mb-6">
+    <span class="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-300 mb-4">Stablecoins</span>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets</h1>
     <div class="flex items-center gap-3 text-sm text-gray-500">
       <span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>June 2026</span>
@@ -83,32 +86,96 @@
       <span>~6 min read</span>
     </div>
   </header>
+  <figure class="mb-8 rounded-2xl overflow-hidden border border-indigo-900/30 shadow-2xl shadow-indigo-900/30">
+        <div class="aspect-[16/9]"><img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=675&fit=crop&q=80" alt="Stablecoins Explained: The Complete Guide to Crypto's Dollar Pegged Assets" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      </figure>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">💵</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">$180B</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Total market cap</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚖️</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">$1</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Target peg</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">📈</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">4–8%</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Typical APY</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🏦</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">T+0</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">vs bank T+3</div>
+        </div></div>
   <div class="prose-custom">
-    <div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+    <div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             What Are Stablecoins and Why Do They Exist
           </h2>
-          <p class="text-gray-400 leading-relaxed">Stablecoins are cryptocurrencies designed to maintain a fixed value—usually $1 USD. They solve crypto's biggest problem: volatility. You can't price a loan, run a business, or accept payments in an asset that swings 10% daily. Stablecoins bridge the gap between traditional finance and crypto, enabling: instant USD transfers without banks (T+0 vs. T+3 days), DeFi lending and borrowing, trading pairs, merchant payments, and as a 'parking spot' during market volatility. The total stablecoin market cap exceeds $180 billion as of 2026.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">Stablecoins are cryptocurrencies designed to maintain a fixed value—usually $1 USD. They solve crypto's biggest problem: volatility. You can't price a loan, run a business, or accept payments in an asset that swings 10% daily. Stablecoins bridge traditional finance and crypto, enabling instant USD transfers without banks, DeFi lending, trading pairs, merchant payments, and a 'parking spot' during volatility. The total stablecoin market cap exceeds $180 billion as of 2026.</p>
+          <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Stablecoins are crypto's bridge to the dollar — the plumbing beneath DeFi, trading and payments.</p>
+      </blockquote>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Types of Stablecoins
           </h2>
-          <p class="text-gray-400 leading-relaxed">Fiat-backed: USDC (Circle, fully reserved with US Treasuries), USDT (Tether, $100B+ market cap but opaque reserves). These are redeemable 1:1 for USD. Crypto-backed: DAI (overcollateralized by ETH and USDC, governed by MakerDAO). Crypto-collateralized stablecoins are decentralized but require more collateral than face value. Algorithmic: FRAX (partially collateralized with algorithmic stability mechanism). The Terra/Luna collapse in 2022 demonstrated that uncollateralized algorithmic stablecoins can fail catastrophically. Stick to fiat-backed or overcollateralized options.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">Not all dollar-pegged tokens are built the same. Their collateral model determines both safety and decentralization.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-3 text-center">Three Types of Stablecoins</div>
+      <svg viewBox="0 0 560 160" class="w-full" role="img" aria-label="Three types of stablecoins: fiat-backed, crypto-backed, algorithmic">
+        <g font-family="Inter,sans-serif" text-anchor="middle">
+          <rect x="20" y="30" width="160" height="100" rx="12" fill="#10b981"/><text x="100" y="65" fill="#04120c" font-size="13" font-weight="700">Fiat-Backed</text><text x="100" y="88" fill="#04120c" font-size="11">USDC · USDT</text><text x="100" y="108" fill="#04120c" font-size="11">1:1 USD reserve</text>
+          <rect x="200" y="30" width="160" height="100" rx="12" fill="#6366f1"/><text x="280" y="65" fill="#fff" font-size="13" font-weight="700">Crypto-Backed</text><text x="280" y="88" fill="#fff" font-size="11">DAI</text><text x="280" y="108" fill="#fff" font-size="11">Over-collateralized</text>
+          <rect x="380" y="30" width="160" height="100" rx="12" fill="#ef4444"/><text x="460" y="65" fill="#fff" font-size="13" font-weight="700">Algorithmic</text><text x="460" y="88" fill="#fff" font-size="11">FRAX</text><text x="460" y="108" fill="#fff" font-size="11">⚠ Risky — can fail</text>
+        </g></svg></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Earning Yield on Stablecoins
           </h2>
-          <p class="text-gray-400 leading-relaxed">One of the most appealing features: earn 4-8% APY on stablecoins—far exceeding bank savings accounts. Methods: Centralized lending (CeFi): Platforms like Binance Earn or Coinbase offer 4-6% APY. Risk: platform failure (avoid putting everything in one place). DeFi lending: Aave, Compound, and Spark Protocol offer 3-8% APY on USDC/USDT deposits. DeFi liquidity: Provide USDC/USDT liquidity on Uniswap V3 for 15-40% APR (higher risk from impermanent loss). Money market funds: Mountain Protocol's USDM is backed by short-term US Treasuries, yielding 4-5% with on-chain access.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">One of the most appealing features: earn 4–8% APY on stablecoins—far exceeding bank savings accounts. The yield source and risk level vary by platform.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 my-7"><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🏦</div>
+            <div class="text-sm font-bold text-white mb-1">CeFi Lending</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Binance Earn / Coinbase: 4–6% APY. Risk: platform failure.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🔗</div>
+            <div class="text-sm font-bold text-white mb-1">DeFi Lending</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Aave / Compound / Spark: 3–8% APY on USDC/USDT.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">💧</div>
+            <div class="text-sm font-bold text-white mb-1">Liquidity Pools</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Uniswap V3 USDC/USDT: 15–40% APR, impermanent-loss risk.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">📜</div>
+            <div class="text-sm font-bold text-white mb-1">Money Market</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Mountain USDM: backed by US Treasuries, 4–5% yield.</div>
+          </div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Risks and Safety Guidelines
           </h2>
-          <p class="text-gray-400 leading-relaxed">Not all stablecoins are equal. USDC is the safest (Circle publishes monthly reserves audited by top firms, holds 100% in cash and short-term Treasuries). USDT has the most volume but the least transparent reserves. DAI is decentralized but carries smart contract and liquidation risks. Rules of thumb: never hold more than 20% of your stablecoins in any single unregulated issuer, keep withdrawal access to at least 2 platforms, diversify across 2-3 stablecoins, and understand that even 'stable' assets can depeg briefly during extreme market stress (March 2023 saw USDC temporarily drop to $0.87).</p>
+          <p class="text-gray-400 leading-relaxed">Even 'stable' assets can depeg briefly during extreme stress—March 2023 saw USDC temporarily drop to $0.87. Diversify across issuers and keep withdrawal access to at least two platforms.</p>
+          <div class="my-7"><div class="grid sm:grid-cols-2 gap-3"><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-red-400">❌ Risky</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>100% in one opaque issuer</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>All funds on a single platform</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Trusting unaudited algorithmic coins</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Ignoring depeg history</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>No backup withdrawal route</span></li></ul>
+          </div><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-emerald-400">✅ Safe</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Diversify across USDC, USDT, DAI</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Keep ≤20% per issuer</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Stick to fiat- or crypto-backed</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Know the 2023 USDC depeg</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Maintain 2+ access points</span></li></ul>
+          </div></div></div>
         </div>
+    <div class="my-7 flex items-center gap-2.5">
+        <span class="text-lg">🎯</span><span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Key Takeaway</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-indigo-500/40 to-transparent"></span>
+      </div>
+    <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Smart crypto investing comes down to a few principles: self-custody your keys, hold for the long term, diversify across audited protocols, and never invest more than you can afford to lose.</p><div class="text-sm text-indigo-400 font-semibold mt-3">— Crypto Brief</div>
+      </blockquote>
   </div>
   <div class="mt-10 pt-6 border-t border-indigo-900/20">
   <a href="/" class="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors">

@@ -14,6 +14,11 @@
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
   .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
 </style>
 <title>Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy? - Crypto Brief</title>
 <meta name="description" content="Compare the best crypto hardware wallets in 2026. Ledger, Trezor, GridPlus, and more. Security features, price, and ease of use reviewed.">
@@ -37,16 +42,13 @@
 (function(){
   const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
   const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
-  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
   const el=document.getElementById("ticker-content");
   async function fetchPrices(){
     try{
       const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
       const d=await r.json();
-      let html="";
       const items=coins.map(c=>{
-        const price=d[c]?.usd;
-        const change=d[c]?.usd_24h_change;
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
         if(!price)return"";
         const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
         const chClass=change>=0?"text-emerald-400":"text-red-400";
@@ -75,7 +77,8 @@
   </div>
 </nav>
 <article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-  <header class="mb-8">
+  <header class="mb-6">
+    <span class="inline-flex items-center gap-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-300 mb-4">Security</span>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy?</h1>
     <div class="flex items-center gap-3 text-sm text-gray-500">
       <span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>June 2026</span>
@@ -83,32 +86,127 @@
       <span>~6 min read</span>
     </div>
   </header>
+  <figure class="mb-8 rounded-2xl overflow-hidden border border-indigo-900/30 shadow-2xl shadow-indigo-900/30">
+        <div class="aspect-[16/9]"><img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=1200&h=675&fit=crop&q=80" alt="Best Hardware Wallets (Cold Wallets) in 2026: Which One Should You Buy?" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover"></div>
+      </figure>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🔒</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">100%</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Offline keys</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">💸</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">$69+</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Entry price</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🛡️</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">9</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Security steps</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⏱️</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">30 min</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">To set up</div>
+        </div></div>
   <div class="prose-custom">
-    <div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+    <div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Why You Need a Hardware Wallet
           </h2>
-          <p class="text-gray-400 leading-relaxed">'Not your keys, not your coins' isn't just a slogan—it's a lesson learned by FTX, Mt. Gox, Celsius, and millions of individual victims who trusted centralized platforms. A hardware wallet stores your private keys offline on a dedicated device, making them immune to malware, phishing, and exchange hacks. If you hold more than $500 in crypto, a hardware wallet ($50-150) is the cheapest insurance you'll ever buy. Consider it the crypto equivalent of a safe deposit box.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">'Not your keys, not your coins' isn't just a slogan—it's a lesson learned by FTX, Mt. Gox, Celsius, and millions of individual victims who trusted centralized platforms. A hardware wallet stores your private keys offline on a dedicated device, making them immune to malware, phishing, and exchange hacks. If you hold more than $500 in crypto, a $50–150 hardware wallet is the cheapest insurance you'll ever buy.</p>
+          <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Not your keys, not your coins.</p><div class="text-sm text-indigo-400 font-semibold mt-3">— Crypto security maxim</div>
+      </blockquote>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
+            Cold vs. Hot Wallets
+          </h2>
+          <p class="text-gray-400 leading-relaxed">The core trade-off in crypto storage is security versus convenience. Cold wallets keep keys offline and untouchable; hot wallets stay online for instant access but are exposed to hacks.</p>
+          <div class="my-7"><div class="grid sm:grid-cols-2 gap-3"><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-red-400">🔥 Hot Wallet</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Keys live online / on an app</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Exposed to malware & phishing</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Free & instant access</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Great for small daily amounts</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-red-400 mt-0.5 shrink-0">•</span><span>Vulnerable to exchange failure</span></li></ul>
+          </div><div class="flex-1 rounded-xl bg-[#0f0e17]/60 border border-indigo-900/20 p-4">
+            <div class="text-sm font-bold mb-3 text-emerald-400">❄️ Cold Wallet</div>
+            <ul class="space-y-2"><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Keys stored offline on a device</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Immune to remote hacks</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Costs $69–249</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Best for long-term holdings</span></li><li class="text-sm text-gray-400 leading-relaxed flex gap-2"><span class="text-emerald-400 mt-0.5 shrink-0">•</span><span>Survives exchange collapses</span></li></ul>
+          </div></div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Top Hardware Wallets Compared
           </h2>
-          <p class="text-gray-400 leading-relaxed">Trezor Model One ($69): Open-source firmware, SHA-256 PIN, supports 1,000+ coins. Best budget option from the most trusted name. Trezor Safe 5 ($169): Touchscreen, open-source, multi-share backup, advanced security features. Ledger Nano S Plus ($79): Bluetooth, supports 5,500+ apps, compact design. Ledger Flex ($249): E-ink touchscreen, Bluetooth, open-source Bitcoin app. GridPlus Lattice1 ($159): Ethereum-focused with native DeFi features, app ecosystem, air-gapped signing. BitBox02 ($79): Swiss-made, minimal attack surface, native Bitcoin-only option.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <p class="text-gray-400 leading-relaxed">The 2026 hardware-wallet market has strong options at every price point. Below is how the leading devices stack up on price, standout feature and best-fit user.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🟦</div>
+            <div class="text-sm font-bold text-white mb-1">Trezor Model One — $69</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Open-source, SHA-256 PIN, 1,000+ coins. Best budget pick.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">📱</div>
+            <div class="text-sm font-bold text-white mb-1">Trezor Safe 5 — $169</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Touchscreen, multi-share backup, top-tier security.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">⚫</div>
+            <div class="text-sm font-bold text-white mb-1">Ledger Nano S Plus — $79</div>
+            <div class="text-xs text-gray-500 leading-relaxed">5,500+ apps, compact, Bluetooth.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">📖</div>
+            <div class="text-sm font-bold text-white mb-1">Ledger Flex — $249</div>
+            <div class="text-xs text-gray-500 leading-relaxed">E-ink touchscreen, open-source BTC app.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">🟧</div>
+            <div class="text-sm font-bold text-white mb-1">GridPlus Lattice1 — $159</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Ethereum-focused, air-gapped signing, DeFi features.</div>
+          </div><div class="rounded-xl bg-[#16152a] border border-indigo-900/25 p-4 hover:border-indigo-500/40 transition-colors">
+            <div class="text-2xl mb-2">⬜</div>
+            <div class="text-sm font-bold text-white mb-1">BitBox02 — $79</div>
+            <div class="text-xs text-gray-500 leading-relaxed">Swiss-made, minimal attack surface, Bitcoin-only option.</div>
+          </div></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
             Security Best Practices
           </h2>
-          <p class="text-gray-400 leading-relaxed">1: Buy ONLY from the manufacturer's official website (never eBay or Amazon). 2: Set a strong PIN (never write it near the seed phrase). 3: Write your 12/24-word recovery seed on metal (fireproof), not paper. 4: Store seed phrases in separate physical locations. 5: Verify the receive address on the device screen before sending funds. 6: Never connect your hardware wallet to a compromised computer. 7: Use a separate dedicated device for large holdings. 8: Test with a small amount first. 9: Consider multi-sig setups for holdings over $100K.</p>
-        </div><div class="mb-8">
-          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
-            Setup Guide for Beginners
+          <p class="text-gray-400 leading-relaxed">Owning the device is only step one. How you set it up and back it up determines whether your funds survive a fire, a hack, or your own mistake. Follow this pyramid: the higher up, the safer your stack.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-4">
+      <div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-3 text-center">Crypto Security Tiers</div>
+      <svg viewBox="0 0 560 230" class="w-full" role="img" aria-label="Crypto security pyramid tiers">
+        <g font-family="Inter,sans-serif" text-anchor="middle">
+          <polygon points="280,20 360,80 200,80" fill="#10b981"/><text x="280" y="60" fill="#04120c" font-size="12" font-weight="700">Hardware Wallet</text>
+          <polygon points="200,84 360,84 410,144 150,144" fill="#6366f1"/><text x="280" y="120" fill="#fff" font-size="12" font-weight="700">Multi-sig / Cold Storage</text>
+          <polygon points="150,148 410,148 460,208 100,208" fill="#8b5cf6"/><text x="280" y="184" fill="#fff" font-size="12" font-weight="700">Exchange / Hot Wallet (least secure)</text>
+        </g>
+      </svg></div>
+        </div><div class="mb-9">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-3 flex items-start gap-2.5">
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 shrink-0"></span>
+            Setup Checklist for Beginners
           </h2>
-          <p class="text-gray-400 leading-relaxed">Unbox your wallet, visit the official setup page (never use a pre-installed app from an unknown source). Generate your seed phrase—write each word in order on your metal backup. Verify by entering the words back. Set your PIN. Add accounts for each cryptocurrency you hold. Send a small test transaction first. Practice restoring from seed on a different device. This whole process takes 20-30 minutes and secures your financial sovereignty for life.</p>
+          <p class="text-gray-400 leading-relaxed">A clean setup takes 20–30 minutes and secures your sovereignty for life. Follow each step in order and never skip the test transaction.</p>
+          <div class="my-7 rounded-2xl bg-[#16152a] border border-indigo-900/30 p-5"><div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-2"><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">1</div>
+            <div class="text-sm font-semibold text-white leading-snug">Buy direct from manufacturer only</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">2</div>
+            <div class="text-sm font-semibold text-white leading-snug">Generate seed & engrave on metal</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">3</div>
+            <div class="text-sm font-semibold text-white leading-snug">Set a strong PIN (not near seed)</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">4</div>
+            <div class="text-sm font-semibold text-white leading-snug">Send a small test transaction</div>
+          </div><div class="hidden sm:flex items-center justify-center text-indigo-500/60"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="flex-1 min-w-0 text-center">
+            <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/30 mb-2">5</div>
+            <div class="text-sm font-semibold text-white leading-snug">Practice restoring from seed</div>
+          </div></div></div>
         </div>
+    <div class="my-7 flex items-center gap-2.5">
+        <span class="text-lg">🎯</span><span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Key Takeaway</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-indigo-500/40 to-transparent"></span>
+      </div>
+    <blockquote class="my-7 relative rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border-l-4 border-indigo-500 p-6">
+        <div class="absolute -top-3 left-5 text-5xl text-indigo-500/40 leading-none">"</div>
+        <p class="text-lg text-gray-200 italic leading-relaxed pl-2">Smart crypto investing comes down to a few principles: self-custody your keys, hold for the long term, diversify across audited protocols, and never invest more than you can afford to lose.</p><div class="text-sm text-indigo-400 font-semibold mt-3">— Crypto Brief</div>
+      </blockquote>
   </div>
   <div class="mt-10 pt-6 border-t border-indigo-900/20">
   <a href="/" class="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors">
