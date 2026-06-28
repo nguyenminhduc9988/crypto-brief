@@ -1,24 +1,134 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']},colors:{indigo:{950:'#1a1640'}}}}}</script>
+<style>
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:#0f0e17}
+  ::-webkit-scrollbar-thumb{background:#312e81;border-radius:4px}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0f0e17;color:#c7c7d1}
+  .ticker-scroll{animation:scroll 30s linear infinite}
+  .ticker-scroll:hover{animation-play-state:paused}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+  .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+</style>
 <title>Crypto Taxes: Complete Guide for Traders and Investors in 2026 - Crypto Brief</title>
 <meta name="description" content="Understanding crypto taxes in 2026. Capital gains, income tax, reporting requirements, and how to legally minimize your crypto tax bill.">
 <link rel="canonical" href="https://nguyenminhduc9988.github.io/crypto-brief/crypto-tax-guide.html">
-<script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-gray-50 text-gray-800">
-<nav class="bg-white shadow-sm border-b"><div class="max-w-4xl mx-auto px-4 py-3"><a href="/" class="font-bold text-lg text-orange-600">Crypto Brief</a></div></nav>
-<article class="max-w-4xl mx-auto px-4 py-8">
-<h1 class="text-3xl font-bold mb-4">Crypto Taxes: Complete Guide for Traders and Investors in 2026</h1>
-<div class="text-sm text-gray-500 mb-6">Published June 2026 · Reading time: ~6 min</div>
-<h2>Yes, Crypto Is Taxable</h2>
-<p>In most countries including the US, UK, Canada, and Australia, cryptocurrency transactions create taxable events. The IRS classifies cryptocurrency as property, meaning every trade, swap, sale, and even some staking rewards trigger tax obligations. Failing to report crypto income carries the same penalties as failing to report any other income—up to 25% of the underreported amount plus interest. The good news: crypto also offers unique tax optimization opportunities.</p>
-<h2>Taxable vs. Non-Taxable Crypto Events</h2>
-<p>Taxable: Selling crypto for fiat (USD), trading one crypto for another (BTC→ETH counts as selling BTC), using crypto to purchase goods/services, receiving crypto as income (mining, staking rewards, airdrops), receiving payments in crypto. Non-taxable: Buying crypto with fiat (no gain/loss yet), transferring between your own wallets, donating crypto to qualified charities (tax-deductible). Note that DeFi liquidity provision may create taxable events at each swap—track carefully.</p>
-<h2>How to Calculate Your Crypto Taxes</h2>
-<p>Short-term capital gains (held < 1 year): taxed at your ordinary income rate (10-37%). Long-term capital gains (held > 1 year): taxed at 0%, 15%, or 20% depending on income. For trades, subtract cost basis (purchase price) from proceeds (sale value) to determine gain/loss. Use crypto tax software like CoinTracker, Koinly, or TokenTax to automatically calculate from your exchange APIs. They generate IRS Form 8949 directly. Track EVERY transaction—even small DeFi swaps compound quickly.</p>
-<h2>Legal Tax Optimization Strategies</h2>
-<p>1: Hold for > 1 year to qualify for lower long-term rates (can save 10-20%). 2: Harvest losses—sell losing positions to offset gains, then buy back (no wash sale rule for crypto currently). 3: Donate appreciated crypto to charity—deduct fair market value, avoid capital gains entirely. 4: Use crypto IRAs for tax-advantaged investing. 5: Keep meticulous records—import data into tax software monthly, not yearly. 6: Consider your tax bracket before large trades. A $50K gain pushes many taxpayers into the next bracket—spread sales across tax years when possible.</p>
-
-<div class="mt-8 border-t pt-6"><a href="/" class="text-orange-600 hover:underline">← Back to all articles</a></div>
+</head><body>
+<div class="w-full bg-[#0a0912] border-b border-indigo-900/30 overflow-hidden" id="ticker">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
+    <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-400 whitespace-nowrap uppercase tracking-wider shrink-0">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span> Live
+    </span>
+    <div class="flex-1 overflow-hidden">
+      <div class="ticker-scroll flex gap-6 whitespace-nowrap" id="ticker-content">
+        <span class="text-xs text-gray-500">Loading prices…</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
+  const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
+  const icons={bitcoin:"₿",ethereum:"Ξ",solana:"◎",binancecoin:"◆",ripple:"✕",cardano:"◎"};
+  const el=document.getElementById("ticker-content");
+  async function fetchPrices(){
+    try{
+      const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
+      const d=await r.json();
+      let html="";
+      const items=coins.map(c=>{
+        const price=d[c]?.usd;
+        const change=d[c]?.usd_24h_change;
+        if(!price)return"";
+        const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
+        const chClass=change>=0?"text-emerald-400":"text-red-400";
+        const arrow=change>=0?"▲":"▼";
+        const chAbs=Math.abs(change).toFixed(2);
+        return`<span class="inline-flex items-center gap-1.5 text-[13px]"><span class="text-indigo-400 font-semibold">${symbols[c]}</span><span class="text-gray-300">${fmt}</span><span class="${chClass} text-[11px]">${arrow} ${chAbs}%</span></span>`;
+      }).filter(Boolean).join('<span class="text-gray-700 mx-1">|</span>');
+      el.innerHTML=items+items;
+    }catch(e){el.innerHTML='<span class="text-xs text-gray-500">Price feed unavailable</span>'}
+  }
+  fetchPrices();setInterval(fetchPrices,60000);
+})();
+</script>
+<nav class="sticky top-0 z-50 bg-[#0f0e17]/90 backdrop-blur-lg border-b border-indigo-900/20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">C</span>
+      <span class="font-bold text-lg text-white tracking-tight">Crypto <span class="text-indigo-400">Brief</span></span>
+    </a>
+    <div class="hidden sm:flex items-center gap-6 text-sm text-gray-400">
+      <a href="defi-beginners-guide-2026.html" class="hover:text-indigo-400 transition-colors">DeFi</a>
+      <a href="crypto-tax-guide.html" class="hover:text-indigo-400 transition-colors">Taxes</a>
+      <a href="best-cold-wallets-2026.html" class="hover:text-indigo-400 transition-colors">Wallets</a>
+      <a href="stablecoin-guide-explained.html" class="hover:text-indigo-400 transition-colors">Stablecoins</a>
+    </div>
+  </div>
+</nav>
+<article class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+  <header class="mb-8">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4">Crypto Taxes: Complete Guide for Traders and Investors in 2026</h1>
+    <div class="flex items-center gap-3 text-sm text-gray-500">
+      <span class="inline-flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>June 2026</span>
+      <span>·</span>
+      <span>~6 min read</span>
+    </div>
+  </header>
+  <div class="prose-custom">
+    <div class="mb-8">
+          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
+            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+            Yes, Crypto Is Taxable
+          </h2>
+          <p class="text-gray-400 leading-relaxed">In most countries including the US, UK, Canada, and Australia, cryptocurrency transactions create taxable events. The IRS classifies cryptocurrency as property, meaning every trade, swap, sale, and even some staking rewards trigger tax obligations. Failing to report crypto income carries the same penalties as failing to report any other income—up to 25% of the underreported amount plus interest. The good news: crypto also offers unique tax optimization opportunities.</p>
+        </div><div class="mb-8">
+          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
+            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+            Taxable vs. Non-Taxable Crypto Events
+          </h2>
+          <p class="text-gray-400 leading-relaxed">Taxable: Selling crypto for fiat (USD), trading one crypto for another (BTC→ETH counts as selling BTC), using crypto to purchase goods/services, receiving crypto as income (mining, staking rewards, airdrops), receiving payments in crypto. Non-taxable: Buying crypto with fiat (no gain/loss yet), transferring between your own wallets, donating crypto to qualified charities (tax-deductible). Note that DeFi liquidity provision may create taxable events at each swap—track carefully.</p>
+        </div><div class="mb-8">
+          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
+            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+            How to Calculate Your Crypto Taxes
+          </h2>
+          <p class="text-gray-400 leading-relaxed">Short-term capital gains (held < 1 year): taxed at your ordinary income rate (10-37%). Long-term capital gains (held > 1 year): taxed at 0%, 15%, or 20% depending on income. For trades, subtract cost basis (purchase price) from proceeds (sale value) to determine gain/loss. Use crypto tax software like CoinTracker, Koinly, or TokenTax to automatically calculate from your exchange APIs. They generate IRS Form 8949 directly. Track EVERY transaction—even small DeFi swaps compound quickly.</p>
+        </div><div class="mb-8">
+          <h2 class="text-xl font-bold text-white mb-3 flex items-start gap-2">
+            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+            Legal Tax Optimization Strategies
+          </h2>
+          <p class="text-gray-400 leading-relaxed">1: Hold for > 1 year to qualify for lower long-term rates (can save 10-20%). 2: Harvest losses—sell losing positions to offset gains, then buy back (no wash sale rule for crypto currently). 3: Donate appreciated crypto to charity—deduct fair market value, avoid capital gains entirely. 4: Use crypto IRAs for tax-advantaged investing. 5: Keep meticulous records—import data into tax software monthly, not yearly. 6: Consider your tax bracket before large trades. A $50K gain pushes many taxpayers into the next bracket—spread sales across tax years when possible.</p>
+        </div>
+  </div>
+  <div class="mt-10 pt-6 border-t border-indigo-900/20">
+  <a href="/" class="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    Back to all articles
+  </a>
+</div>
 </article>
-<footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">© 2026 Crypto Brief</footer>
+<footer class="border-t border-indigo-900/20 mt-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-[10px] font-bold">C</span>
+      <span class="text-sm text-gray-500">© 2026 Crypto Brief. All rights reserved.</span>
+    </div>
+    <div class="flex gap-5 text-xs text-gray-500">
+      <a href="defi-beginners-guide-2026.html" class="hover:text-indigo-400 transition-colors">DeFi</a>
+      <a href="crypto-tax-guide.html" class="hover:text-indigo-400 transition-colors">Taxes</a>
+      <a href="best-cold-wallets-2026.html" class="hover:text-indigo-400 transition-colors">Wallets</a>
+      <a href="layer-2-scaling-explained.html" class="hover:text-indigo-400 transition-colors">L2</a>
+      <a href="crypto-dollar-cost-averaging.html" class="hover:text-indigo-400 transition-colors">DCA</a>
+      <a href="stablecoin-guide-explained.html" class="hover:text-indigo-400 transition-colors">Stablecoins</a>
+    </div>
+  </div>
+</footer>
 </body></html>
