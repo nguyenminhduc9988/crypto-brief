@@ -99,7 +99,8 @@ img{display:block;max-width:100%;height:auto}
 #cat-defi:checked~.pills label[for="cat-defi"],
 #cat-trading:checked~.pills label[for="cat-trading"],
 #cat-security:checked~.pills label[for="cat-security"],
-#cat-tax:checked~.pills label[for="cat-tax"]{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
+#cat-tax:checked~.pills label[for="cat-tax"],
+#cat-depin:checked~.pills label[for="cat-depin"]{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
 
 /* Card animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -114,6 +115,7 @@ img{display:block;max-width:100%;height:auto}
 #cat-trading:checked~.grid .card[data-cat]:not([data-cat="trading"]){display:none}
 #cat-security:checked~.grid .card[data-cat]:not([data-cat="security"]){display:none}
 #cat-tax:checked~.grid .card[data-cat]:not([data-cat="tax"]){display:none}
+#cat-depin:checked~.grid .card[data-cat]:not([data-cat="depin"]){display:none}
 
 /* Featured card */
 .featured-card{background:var(--surface);border-radius:16px;overflow:hidden;margin-bottom:2rem;animation:fadeUp .6s ease-out both;position:relative;border:1px solid var(--border)}
@@ -270,6 +272,7 @@ img{display:block;max-width:100%;height:auto}
 <input type="radio" name="cat" id="cat-trading">
 <input type="radio" name="cat" id="cat-security">
 <input type="radio" name="cat" id="cat-tax">
+<input type="radio" name="cat" id="cat-depin">
 <div class="pills">
 <label for="cat-all">All</label>
 <label for="cat-bitcoin">Bitcoin</label>
@@ -278,6 +281,7 @@ img{display:block;max-width:100%;height:auto}
 <label for="cat-trading">Trading</label>
 <label for="cat-security">Security</label>
 <label for="cat-tax">Tax</label>
+<label for="cat-depin">DePIN</label>
 </div>
 
 <!-- Featured -->
@@ -299,10 +303,20 @@ img{display:block;max-width:100%;height:auto}
 <a href="ai-crypto-trading-bots-2026-guide.html" class="article-card card" data-cat="ai">
 <img class="card-img" src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=500&fit=crop" alt="AI neural network powering cryptocurrency trading algorithms" width="800" height="500" loading="lazy">
 <div class="card-body">
-<span class="card-tag">AI &amp; Trading</span>
+<span class="card-tag">AI & Trading</span>
 <h3>AI-Powered Crypto Trading Bots: The Complete 2026 Guide</h3>
 <p class="card-excerpt">From simple grid bots to autonomous DeFi agents — how AI is transforming crypto trading and what it means for your portfolio.</p>
 <time class="card-date">Jun 29, 2026</time>
+</div>
+</a>
+
+<a href="depin-guide-2026.html" class="article-card card" data-cat="depin">
+<img class="card-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop" alt="Decentralized physical infrastructure network visualization with sensors, antennas, and blockchain nodes" width="800" height="500" loading="lazy">
+<div class="card-body">
+<span class="card-badge">DePIN</span>
+<h3>DePIN in 2026: How Crypto Builds Real-World Infrastructure</h3>
+<p class="card-excerpt">From Helium to Render to Hivemapper — DePIN projects are turning physical infrastructure into token-incentivized networks. Complete guide to the $3.5B sector.</p>
+<time class="card-date">Jun 30, 2026</time>
 </div>
 </a>
 
