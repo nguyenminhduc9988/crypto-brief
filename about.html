@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="ko-fi-verification" content="64ea4528-4867-47f4-9dbd-3e9dc4a42179">
+<meta name="google-adsense-account" content="ca-pub-1432831545676654">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7E63EG326X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-7E63EG326X");
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="google-site-verification" content="REPLACE_WITH_YOUR_GSC_CODE">
+<script async defer data-website-id="crypto-brief" src="https://analytics.lsouls.com/script.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']},colors:{indigo:{950:'#1a1640'}}}}}}</script>
+<style>
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:#0f0e17}
+  ::-webkit-scrollbar-thumb{background:#312e81;border-radius:4px}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0f0e17;color:#c7c7d1}
+  .ticker-scroll{animation:scroll 30s linear infinite}
+  .ticker-scroll:hover{animation-play-state:paused}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+  .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
+</style>
+<title>About | Crypto Brief</title>
+<meta name="description" content="About Crypto Brief: our mission, who runs the site and how we keep it free.">
+<link rel="canonical" href="https://nguyenminhduc9988.github.io/crypto-brief/about.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="About | Crypto Brief">
+<meta property="og:description" content="About Crypto Brief: our mission, who runs the site and how we keep it free.">
+<meta property="og:url" content="https://nguyenminhduc9988.github.io/crypto-brief/about.html">
+<meta property="og:site_name" content="Crypto Brief">
+<meta property="og:image" content="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=630&fit=crop">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crypto Brief - Cryptocurrency News, DeFi Guides & Blockchain Education">
+<meta name="twitter:description" content="Expert crypto analysis, DeFi guides, wallet reviews, tax strategies, and market insights for 2026.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=630&fit=crop">
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1432831545676654" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- July Promo Banner -->
+<div style="background:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);text-align:center;padding:0.5rem 1rem;font-size:0.82rem;font-weight:600;color:#fff;">
+  🎉 <strong>Duc Store July Sale — 25% OFF</strong> 37 digital products · Code: <span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px;font-weight:700;">JULY25</span> · <a href="https://nguyenminhduc9988.github.io/duc-store/" style="color:#fff;text-decoration:underline;">Shop Now →</a>
+</div>
+<div class="w-full bg-[#0a0912] border-b border-indigo-900/30 overflow-hidden" id="ticker">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
+    <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-400 whitespace-nowrap uppercase tracking-wider shrink-0">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span> Live
+    </span>
+    <div class="flex-1 overflow-hidden">
+      <div class="ticker-scroll flex gap-6 whitespace-nowrap" id="ticker-content">
+        <span class="text-xs text-gray-500">Loading prices…</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
+  const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
+  const el=document.getElementById("ticker-content");
+  async function fetchPrices(){
+    try{
+      const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
+      const d=await r.json();
+      const items=coins.map(c=>{
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
+        if(!price)return"";
+        const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
+        const chClass=change>=0?"text-emerald-400":"text-red-400";
+        const arrow=change>=0?"▲":"▼";
+        const chAbs=Math.abs(change).toFixed(2);
+        return`<span class="inline-flex items-center gap-1.5 text-[13px]"><span class="text-indigo-400 font-semibold">${symbols[c]}</span><span class="text-gray-300">${fmt}</span><span class="${chClass} text-[11px]">${arrow} ${chAbs}%</span></span>`;
+      }).filter(Boolean).join('<span class="text-gray-700 mx-1">|</span>');
+      el.innerHTML=items+items;
+    }catch(e){el.innerHTML='<span class="text-xs text-gray-500">Price feed unavailable</span>'}
+  }
+  fetchPrices();setInterval(fetchPrices,60000);
+})();
+</script>
+<nav class="sticky top-0 z-50 bg-[#0f0e17]/90 backdrop-blur-lg border-b border-indigo-900/20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">C</span>
+      <span class="font-bold text-lg text-white tracking-tight">Crypto <span class="text-indigo-400">Brief</span></span>
+    </a>
+    <div class="hidden sm:flex items-center gap-6 text-sm text-gray-400">
+      <a href="defi-beginners-guide-2026.html" class="hover:text-indigo-400 transition-colors">DeFi</a>
+      <a href="crypto-tax-guide.html" class="hover:text-indigo-400 transition-colors">Taxes</a>
+      <a href="best-cold-wallets-2026.html" class="hover:text-indigo-400 transition-colors">Wallets</a>
+      <a href="stablecoin-guide-explained.html" class="hover:text-indigo-400 transition-colors">Stablecoins</a>
+      <a href="ethereum-staking-guide-2026.html" class="hover:text-indigo-400 transition-colors">Staking</a>
+    </div>
+  </div>
+</nav>
+
+<header class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-8 text-center overflow-hidden">
+  <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-indigo-600/20 to-violet-600/10 blur-3xl"></div><div class="pointer-events-none absolute -bottom-32 -left-24 w-72 h-72 rounded-full bg-gradient-to-tr from-violet-600/15 to-fuchsia-600/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+  <span class="float-a absolute top-10 left-[8%] text-4xl opacity-20">₿</span>
+  <span class="float-b absolute top-20 right-[12%] text-5xl opacity-15">Ξ</span>
+  <span class="float-c absolute bottom-16 left-[18%] text-3xl opacity-20">◎</span>
+  <span class="float-a absolute bottom-10 right-[20%] text-4xl opacity-15">◆</span>
+  <span class="float-b absolute top-1/2 left-[45%] text-3xl opacity-10">✕</span>
+</div>
+  <div class="relative">
+    <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>
+      <span class="text-xs font-medium text-indigo-300">Market updates in real time</span>
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+      Crypto Guides for <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Smart Investors</span>
+    </h1>
+    <p class="text-lg text-gray-400 max-w-2xl mx-auto">In-depth, visual guides on DeFi, taxes, wallets, Layer 2 scaling, DCA strategies, and stablecoins — actionable knowledge, not a wall of text.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">📚</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">22</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Deep-dive guides</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚡</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">Real-time</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Price ticker</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🎯</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">2026</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Up-to-date</div>
+        </div></div>
+  </div>
+</header>
+
+<section class="wrap" style="padding:34px 0 60px;max-width:760px">
+  <p class="crumbs"><a href="/crypto-brief/">Home</a> › About</p>
+  <h1 style="font-size:2rem;font-weight:800;margin:.2em 0">About Crypto Brief</h1>
+  <div class="seo">
+    <p>Crypto Brief is an independent project dedicated to cryptocurrency news, defi guides and blockchain education. Our goal is to provide fast, reliable, and genuinely useful resources that work in your browser &mdash; no sign-ups, no friction, and no cost to you.</p>
+    <h2>Our Mission</h2>
+    <p>We believe that practical tools and clear, honest information should be accessible to everyone. Every page on this site is built with the reader in mind: easy to scan, accurate, and free of unnecessary complexity. Where we cover products or services, we aim to be transparent and objective.</p>
+    <h2>What You'll Find Here</h2>
+    <ul>
+      <li>Original guides, tutorials, and explainers written for real-world use.</li>
+      <li>Free browser-based tools that process your data privately on your own device.</li>
+      <li>Regularly updated content that reflects current best practices and information.</li>
+    </ul>
+    <h2>Who Runs This Site</h2>
+    <p>Crypto Brief is maintained by Duc Nguyen, an independent developer and writer based in Singapore. The site is operated as a one-person project, combining hand-written content with careful automation to keep everything up to date.</p>
+    <h2>How We're Supported</h2>
+    <p>This site is free to use. We're supported by display advertising (including Google AdSense) and, occasionally, affiliate links. This helps cover hosting and development costs. Sponsorship and advertising never influence the editorial content, and we only link to products and services we believe are genuinely useful. See our <a href="/crypto-brief/terms">Terms of Service</a> for the full disclosure.</p>
+    <h2>Get in Touch</h2>
+    <p>Have a question, suggestion, or just want to say hello? Visit our <a href="/crypto-brief/contact">Contact page</a> or email <a href="mailto:theaiproducerworks@gmail.com">theaiproducerworks@gmail.com</a>.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+<p style="margin-top:0;font-weight:700">Crypto Brief</p>
+<nav style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:10px 0;font-size:.88rem">
+<a href="/crypto-brief/about">About</a>
+<a href="/crypto-brief/contact">Contact</a>
+<a href="/crypto-brief/privacy">Privacy Policy</a>
+<a href="/crypto-brief/terms">Terms of Service</a>
+</nav>
+<p style="margin-top:12px">&copy; 2026 Crypto Brief. All rights reserved.</p>
+</div></footer>
+</body>
+</html>

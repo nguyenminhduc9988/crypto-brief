@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="ko-fi-verification" content="64ea4528-4867-47f4-9dbd-3e9dc4a42179">
+<meta name="google-adsense-account" content="ca-pub-1432831545676654">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7E63EG326X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-7E63EG326X");
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="google-site-verification" content="REPLACE_WITH_YOUR_GSC_CODE">
+<script async defer data-website-id="crypto-brief" src="https://analytics.lsouls.com/script.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']},colors:{indigo:{950:'#1a1640'}}}}}}</script>
+<style>
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:#0f0e17}
+  ::-webkit-scrollbar-thumb{background:#312e81;border-radius:4px}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0f0e17;color:#c7c7d1}
+  .ticker-scroll{animation:scroll 30s linear infinite}
+  .ticker-scroll:hover{animation-play-state:paused}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+  .live-dot{animation:pulse-dot 2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .float-a{animation:float 6s ease-in-out infinite}
+  .float-b{animation:float2 8s ease-in-out infinite}
+  .float-c{animation:float 7s ease-in-out infinite 1s}
+</style>
+<title>Privacy Policy | Crypto Brief</title>
+<meta name="description" content="How Crypto Brief collects, uses and protects your data, including cookies, Google AdSense, and your privacy rights.">
+<link rel="canonical" href="https://nguyenminhduc9988.github.io/crypto-brief/privacy.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy | Crypto Brief">
+<meta property="og:description" content="How Crypto Brief collects, uses and protects your data, including cookies, Google AdSense, and your privacy rights.">
+<meta property="og:url" content="https://nguyenminhduc9988.github.io/crypto-brief/privacy.html">
+<meta property="og:site_name" content="Crypto Brief">
+<meta property="og:image" content="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=630&fit=crop">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crypto Brief - Cryptocurrency News, DeFi Guides & Blockchain Education">
+<meta name="twitter:description" content="Expert crypto analysis, DeFi guides, wallet reviews, tax strategies, and market insights for 2026.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=630&fit=crop">
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1432831545676654" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- July Promo Banner -->
+<div style="background:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);text-align:center;padding:0.5rem 1rem;font-size:0.82rem;font-weight:600;color:#fff;">
+  🎉 <strong>Duc Store July Sale — 25% OFF</strong> 37 digital products · Code: <span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px;font-weight:700;">JULY25</span> · <a href="https://nguyenminhduc9988.github.io/duc-store/" style="color:#fff;text-decoration:underline;">Shop Now →</a>
+</div>
+<div class="w-full bg-[#0a0912] border-b border-indigo-900/30 overflow-hidden" id="ticker">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
+    <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-400 whitespace-nowrap uppercase tracking-wider shrink-0">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span> Live
+    </span>
+    <div class="flex-1 overflow-hidden">
+      <div class="ticker-scroll flex gap-6 whitespace-nowrap" id="ticker-content">
+        <span class="text-xs text-gray-500">Loading prices…</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const coins=["bitcoin","ethereum","solana","binancecoin","ripple","cardano"];
+  const symbols={bitcoin:"BTC",ethereum:"ETH",solana:"SOL",binancecoin:"BNB",ripple:"XRP",cardano:"ADA"};
+  const el=document.getElementById("ticker-content");
+  async function fetchPrices(){
+    try{
+      const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids="+coins.join(",")+"&vs_currencies=usd&include_24hr_change=true");
+      const d=await r.json();
+      const items=coins.map(c=>{
+        const price=d[c]?.usd;const change=d[c]?.usd_24h_change;
+        if(!price)return"";
+        const fmt=price>=1?price.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):price.toFixed(6);
+        const chClass=change>=0?"text-emerald-400":"text-red-400";
+        const arrow=change>=0?"▲":"▼";
+        const chAbs=Math.abs(change).toFixed(2);
+        return`<span class="inline-flex items-center gap-1.5 text-[13px]"><span class="text-indigo-400 font-semibold">${symbols[c]}</span><span class="text-gray-300">${fmt}</span><span class="${chClass} text-[11px]">${arrow} ${chAbs}%</span></span>`;
+      }).filter(Boolean).join('<span class="text-gray-700 mx-1">|</span>');
+      el.innerHTML=items+items;
+    }catch(e){el.innerHTML='<span class="text-xs text-gray-500">Price feed unavailable</span>'}
+  }
+  fetchPrices();setInterval(fetchPrices,60000);
+})();
+</script>
+<nav class="sticky top-0 z-50 bg-[#0f0e17]/90 backdrop-blur-lg border-b border-indigo-900/20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">C</span>
+      <span class="font-bold text-lg text-white tracking-tight">Crypto <span class="text-indigo-400">Brief</span></span>
+    </a>
+    <div class="hidden sm:flex items-center gap-6 text-sm text-gray-400">
+      <a href="defi-beginners-guide-2026.html" class="hover:text-indigo-400 transition-colors">DeFi</a>
+      <a href="crypto-tax-guide.html" class="hover:text-indigo-400 transition-colors">Taxes</a>
+      <a href="best-cold-wallets-2026.html" class="hover:text-indigo-400 transition-colors">Wallets</a>
+      <a href="stablecoin-guide-explained.html" class="hover:text-indigo-400 transition-colors">Stablecoins</a>
+      <a href="ethereum-staking-guide-2026.html" class="hover:text-indigo-400 transition-colors">Staking</a>
+    </div>
+  </div>
+</nav>
+
+<header class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-8 text-center overflow-hidden">
+  <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-indigo-600/20 to-violet-600/10 blur-3xl"></div><div class="pointer-events-none absolute -bottom-32 -left-24 w-72 h-72 rounded-full bg-gradient-to-tr from-violet-600/15 to-fuchsia-600/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+  <span class="float-a absolute top-10 left-[8%] text-4xl opacity-20">₿</span>
+  <span class="float-b absolute top-20 right-[12%] text-5xl opacity-15">Ξ</span>
+  <span class="float-c absolute bottom-16 left-[18%] text-3xl opacity-20">◎</span>
+  <span class="float-a absolute bottom-10 right-[20%] text-4xl opacity-15">◆</span>
+  <span class="float-b absolute top-1/2 left-[45%] text-3xl opacity-10">✕</span>
+</div>
+  <div class="relative">
+    <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>
+      <span class="text-xs font-medium text-indigo-300">Market updates in real time</span>
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+      Crypto Guides for <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Smart Investors</span>
+    </h1>
+    <p class="text-lg text-gray-400 max-w-2xl mx-auto">In-depth, visual guides on DeFi, taxes, wallets, Layer 2 scaling, DCA strategies, and stablecoins — actionable knowledge, not a wall of text.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 my-7"><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">📚</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">22</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Deep-dive guides</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">⚡</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">Real-time</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Price ticker</div>
+        </div><div class="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/5 border border-indigo-500/20 p-4 text-center hover:border-indigo-400/40 transition-colors">
+          <div class="text-3xl mb-1">🎯</div>
+          <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight">2026</div>
+          <div class="text-[11px] text-gray-500 mt-1 leading-snug">Up-to-date</div>
+        </div></div>
+  </div>
+</header>
+
+<section class="wrap" style="padding:34px 0 60px;max-width:760px">
+  <p class="crumbs"><a href="/crypto-brief/">Home</a> › Privacy Policy</p>
+  <h1 style="font-size:2rem;font-weight:800;margin:.2em 0">Privacy Policy</h1>
+  <p style="color:var(--muted);font-size:.9rem">Last updated: July 04, 2026</p>
+  <div class="seo">
+    <p>This Privacy Policy describes how Crypto Brief ("we", "us", or "our") collects, uses, and protects information when you visit https://nguyenminhduc9988.github.io/crypto-brief/ (the "Site"). By using the Site, you agree to the practices described below.</p>
+    <h2>Information We Collect</h2>
+    <p>We may collect non-personal and limited personal information automatically when you visit the Site, including your browser type, device information, approximate geographic location (country/region), pages viewed, time spent on pages, and referring URLs. Our tools that process text (such as formatters and converters) run entirely in your browser and the data you enter is never sent to or stored on our servers.</p>
+    <h2>Cookies and Similar Technologies</h2>
+    <p>We use cookies and similar technologies (local storage, pixels) to operate the Site, understand how it is used, remember preferences, and serve advertising. Cookies are small text files stored on your device. You can configure your browser to refuse cookies or alert you when cookies are being sent; however, some parts of the Site may not function correctly without them.</p>
+    <h2>Google AdSense and Third-Party Advertising</h2>
+    <p>We use Google AdSense to display advertisements. Google, as a third-party vendor, uses cookies (including the DoubleClick DART cookie) to serve ads to you based on your prior visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visit to our Site and other sites on the Internet.</p>
+    <ul>
+      <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to our website or other websites.</li>
+      <li>Google's use of advertising cookies allows it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet.</li>
+      <li>You may opt out of personalised advertising by visiting <strong>Google Ads Settings</strong> (https://www.google.com/settings/ads) and <strong>aboutads.info</strong> (http://www.aboutads.info/choices/).</li>
+      <li>For EU/EEA users, we comply with GDPR consent requirements before loading advertising cookies.</li>
+    </ul>
+    <h2>Analytics</h2>
+    <p>We use Google Analytics (GA4) and similar measurement tools to collect aggregated usage data such as page views and general engagement. This helps us improve the Site. Analytics data is processed under Google's privacy framework and is generally anonymised or pseudonymised.</p>
+    <h2>Third-Party Links and Content</h2>
+    <p>Our Site contains links to external websites that are not operated by us. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services. We strongly advise you to review the privacy policy of every site you visit.</p>
+    <h2>Children's Privacy</h2>
+    <p>Our Site is not directed to children under the age of 13 (or the applicable age in your jurisdiction). We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can delete it.</p>
+    <h2>Your Rights</h2>
+    <p>Depending on your location (for example, under the GDPR in the EU/EEA/UK or the CCPA in California), you may have rights to access, correct, delete, or restrict the processing of your personal data, and to object to or opt out of certain processing such as targeted advertising. To exercise these rights, contact us at the email below.</p>
+    <h2>Data Security</h2>
+    <p>We implement reasonable technical and organisational measures to protect information. However, no method of transmission over the Internet is completely secure, and we cannot guarantee absolute security.</p>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. You are advised to review this page periodically for any changes.</p>
+    <h2>Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:theaiproducerworks@gmail.com">theaiproducerworks@gmail.com</a>.</p>
+  </div>
+</section>
+<footer><div class="wrap">
+<p style="margin-top:0;font-weight:700">Crypto Brief</p>
+<nav style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:10px 0;font-size:.88rem">
+<a href="/crypto-brief/about">About</a>
+<a href="/crypto-brief/contact">Contact</a>
+<a href="/crypto-brief/privacy">Privacy Policy</a>
+<a href="/crypto-brief/terms">Terms of Service</a>
+</nav>
+<p style="margin-top:12px">&copy; 2026 Crypto Brief. All rights reserved.</p>
+</div></footer>
+</body>
+</html>
